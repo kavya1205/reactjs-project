@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -10,27 +10,23 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import Searchbar from  "../Searchbar/Searchbar.jsx"
 
 const pages = ["Genre", "Trending"];
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [searchedValue, setSearchedValue] = useState("");
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
 
-
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleSearchChange =()=>{
-      setSearchedValue(e.target.value);
-  }
- 
+  
 
   return (
     <AppBar position="static">
@@ -41,7 +37,7 @@ function Header() {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -52,10 +48,9 @@ function Header() {
               textDecoration: "none",
             }}
           >
-           LOGO
-           <Searchbar placeholder="Search movie name" onChange={(e)=>handleSearchChange(e)}/>
+            LOGO
           </Typography>
-            
+          
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -90,7 +85,7 @@ function Header() {
               ))}
             </Menu>
           </Box>
-          
+
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button

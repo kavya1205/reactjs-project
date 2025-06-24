@@ -2,18 +2,11 @@ import React, { useState, useEffect } from "react";
 import MovieCards from "../../components/MovieCards/MovieCards";
 import { useQuery } from "@tanstack/react-query";
 import "./Dashboard.scss";
-const Dashboard = () => {
+import Searchbar from "../../components/Searchbar/Searchbar";
+
+const Dashboard = ({data}) => {
   const [movieList, setMovieList] = useState([]);
   const [searchedValue, setSearchedValue] = useState("");
-const apiKey = import.meta.env.VITE_API_KEY
-  const { isPending, error, data } = useQuery({
-    queryKey: ["movies-list"],
-    queryFn: () =>
-      fetch(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`
-      ).then((res) => res.json()),
-    //.then(d=>setMovieList(d))
-  });
 
   useEffect(() => {
     if (searchedValue.trim() === "") {
@@ -27,28 +20,37 @@ const apiKey = import.meta.env.VITE_API_KEY
     }
   }, [searchedValue]);
   const handleSearchChange = (e) => {
+    console.log("are you getting called?")
     if (searchedValue.trim() === "") {
+      console.log('inside if')
       setMovieList(data?.results);
-    } else if (e.target.value.trim() !== "") {
+    } 
+    else if (e.target.value.trim() !== "") {
+      console.log("inside else")
       let filteredData = data?.results?.filter((d) =>
         d.original_title.toLowerCase().includes(e.target.value.toLowerCase())
       );
       setMovieList(filteredData);
     }
   };
-
+console.log("movieList",movieList)
   return (
     <>
       <div>
-        {/* <div className="title-search-container">
-          <input
+        <div className="title-search-container">
+          <h2 className="section-title">Movies List</h2>
+          {/* <input
             placeholder="Search movie title here"
             onChange={(e) => {
               setSearchedValue(e.target.value);
               handleSearchChange(e);
             }}
+          /> */}
+          <Searchbar
+            placeholder="Search movie name"
+            onChange={(e) => {setSearchedValue(e.target.value);handleSearchChange(e)}}
           />
-        </div> */}
+        </div>
 
         <MovieCards movieList={movieList || []} />
       </div>
